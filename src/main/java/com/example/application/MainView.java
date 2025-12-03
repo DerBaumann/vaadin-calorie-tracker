@@ -1,14 +1,10 @@
 package com.example.application;
 
-import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.Header;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 
@@ -66,7 +62,7 @@ public class MainView extends VerticalLayout {
         var btn = new Button("Click me", e -> add(new Paragraph(service.greet())));
 
         var div = new Div();
-        div.add(h1, p1, btn, new RouterLink("Go to About", AboutView.class));
+        div.add(h1, p1, btn, new RouterLink("Go to About", AddView.class));
         add(div);
     }
 }
