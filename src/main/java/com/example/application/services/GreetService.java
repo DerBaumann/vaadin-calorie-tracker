@@ -1,4 +1,4 @@
-package com.example.application;
+package com.example.application.services;
 
 import java.io.Serializable;
 import org.springframework.stereotype.Service;
