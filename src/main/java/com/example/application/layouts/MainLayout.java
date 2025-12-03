@@ -13,6 +13,7 @@ public class MainLayout extends AppLayout {
     public MainLayout() {
         var layout = new HorizontalLayout(new RouterLink("Home", MainView.class), new RouterLink("Add", AddView.class), new RouterLink("Settings", SettingsView.class));
         layout.getThemeList().add("spacing");
+        layout.setPadding(true);
 
         addToNavbar(layout);
     }
