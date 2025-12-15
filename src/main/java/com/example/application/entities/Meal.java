@@ -19,9 +19,10 @@ public class Meal {
 
     private String name;
 
-    private int calories;
-    private int carbs;
-    private int protein;
-    private int fats;
-    private int fibers;
+    private Integer calories;
+    private Integer carbs;
+    private Integer protein;
+    private Integer fats;
+    private Integer fibers;
+
 }
