@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,12 +18,21 @@ public class Meal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private String name;
 
+    @NotNull
     private Integer calories;
-    private Integer carbs;
-    private Integer protein;
-    private Integer fats;
-    private Integer fibers;
 
+    @NotNull
+    private Integer carbs;
+
+    @NotNull
+    private Integer protein;
+
+    @NotNull
+    private Integer fats;
+
+    @NotNull
+    private Integer fibers;
 }
