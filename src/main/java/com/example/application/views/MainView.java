@@ -1,33 +1,19 @@
 package com.example.application.views;
 
 import com.example.application.entities.Meal;
-import com.example.application.services.GreetService;
 import com.example.application.services.MealService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.component.html.ListItem;
+import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.html.UnorderedList;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.progressbar.ProgressBar;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouterLink;
 
 @Route
 public class MainView extends VerticalLayout {
-    public Component calorieBar(int totalCalories, int maxCalories) {
-        final var container = new VerticalLayout();
-
-        final var calorieBar = new ProgressBar();
-        calorieBar.setValue((double) totalCalories /  maxCalories);
-        calorieBar.setHeight(4, Unit.EM);
-
-        final var calorieStatusText = String.format("%d / %d", totalCalories, maxCalories);
-        final var calorieStatus = new Paragraph(calorieStatusText);
-
-        container.add(calorieBar, calorieStatus);
-        return container;
-    }
-
     public MainView(MealService mealService) {
         final var meals = mealService.findAll();
 
@@ -35,6 +21,12 @@ public class MainView extends VerticalLayout {
         final var maxCalories = 2000;
 
         add(calorieBar(totalCalories, maxCalories));
+
+        // TODO: Nutrient Stats
+
+        add(new Button("Add", event -> {
+            getUI().ifPresent(ui -> ui.navigate(AddView.class));
+        }));
 
         if (meals.isEmpty()) {
             add(new Paragraph("No meals found"));
@@ -46,5 +38,19 @@ public class MainView extends VerticalLayout {
             }
             add(mealList);
         }
+    }
+
+    public Component calorieBar(int totalCalories, int maxCalories) {
+        final var container = new VerticalLayout();
+
+        final var calorieBar = new ProgressBar();
+        calorieBar.setValue((double) totalCalories / maxCalories);
+        calorieBar.setHeight(4, Unit.EM);
+
+        final var calorieStatusText = String.format("%d / %d", totalCalories, maxCalories);
+        final var calorieStatus = new Paragraph(calorieStatusText);
+
+        container.add(calorieBar, calorieStatus);
+        return container;
     }
 }
