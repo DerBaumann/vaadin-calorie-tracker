@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -16,5 +17,9 @@ public class MealService implements Serializable {
 
     public Meal save(Meal meal) {
         return mealRepo.save(meal);
+    }
+
+    public List<Meal> findAll() {
+        return mealRepo.findAll();
     }
 }

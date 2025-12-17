@@ -26,6 +26,7 @@ public class AddView extends VerticalLayout {
     private IntegerField fibers = new IntegerField("Fibers");
 
     private Button saveButton = new Button("Save");
+    private Button backButton = new Button("Back");
 
     private Binder<Meal> binder = new Binder<>(Meal.class);
 
@@ -34,10 +35,11 @@ public class AddView extends VerticalLayout {
         this.mealService = mealService;
 
         var formLayout = new FormLayout();
-        formLayout.add(name,  calories, carbs, protein, fats, fibers,  saveButton);
+        formLayout.add(name,  calories, carbs, protein, fats, fibers,  saveButton,  backButton);
 
         binder.bindInstanceFields(this);
         saveButton.addClickListener(e -> saveMeal());
+        backButton.addClickListener(e -> getUI().ifPresent(ui -> ui.navigate(MainView.class)));
 
         add(formLayout);
     }
