@@ -16,14 +16,6 @@ import com.vaadin.flow.router.Route;
 
 @Route
 public class MainView extends VerticalLayout {
-    enum ActivityLevel {
-        
-    }
-
-    record NutriScore(int actual, int total) {}
-
-    record User(String name, int age, int height, int weight, )
-
     public MainView(MealService mealService) {
         final var meals = mealService.findAll();
 
