@@ -1,5 +1,7 @@
 package com.example.application.views;
 
+import com.example.application.components.grid.GridLayout;
+import com.example.application.components.grid.GridTrack;
 import com.example.application.entities.Meal;
 import com.example.application.services.MealService;
 import com.vaadin.flow.component.Component;
@@ -14,6 +16,14 @@ import com.vaadin.flow.router.Route;
 
 @Route
 public class MainView extends VerticalLayout {
+    enum ActivityLevel {
+        
+    }
+
+    record NutriScore(int actual, int total) {}
+
+    record User(String name, int age, int height, int weight, )
+
     public MainView(MealService mealService) {
         final var meals = mealService.findAll();
 
@@ -22,7 +32,15 @@ public class MainView extends VerticalLayout {
 
         add(calorieBar(totalCalories, maxCalories));
 
-        // TODO: Nutrient Stats
+        final var totalCarbs = 45;
+        final var actualCarbs = meals.stream().mapToInt(Meal::getCarbs).sum();
+        final var carbsText = new Paragraph(String.format("%d/%d", actualCarbs, totalCarbs));
+
+        final var totalProtein = 120;
+        final var actualProtein = meals.stream().mapToInt(Meal::getProtein).sum();
+        final var proteinText = new Paragraph(String.format("%d/%d", actualProtein, totalProtein));
+
+        final var nutritionDashboard = new GridLayout(new GridTrack.Count(2));
 
         add(new Button("Add", event -> {
             getUI().ifPresent(ui -> ui.navigate(AddView.class));
