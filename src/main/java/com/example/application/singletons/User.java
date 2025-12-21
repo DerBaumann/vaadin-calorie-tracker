@@ -5,10 +5,10 @@ import com.example.application.enums.BMIStatus;
 import com.example.application.enums.Gender;
 
 public final class User {
-    public static final String name = "";
-    public static final int age = 0;
-    public static final int height = 0; // cm
-    public static final int weight = 0; // kg
+    public static final String name = "Bob";
+    public static final int age = 32;
+    public static final int height = 180; // cm
+    public static final int weight = 91; // kg
     public static final ActivityLevel activityLevel = ActivityLevel.Low;
     public static final Gender gender = Gender.Male;
 
