@@ -2,6 +2,7 @@ package com.example.application.views;
 
 import com.example.application.entities.Meal;
 import com.example.application.services.MealService;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.notification.Notification;
@@ -54,6 +55,7 @@ public class AddView extends VerticalLayout {
 
         mealService.save(meal);
         Notification.show("Saved");
-        binder.readBean(new  Meal());
+
+        UI.getCurrent().navigate(MainView.class);
     }
 }
