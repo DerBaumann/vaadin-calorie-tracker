@@ -1,7 +1,6 @@
 package com.example.application.views;
 
 import com.example.application.components.UserEditDialog;
-import com.example.application.services.UserService;
 import com.example.application.singletons.User;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
@@ -13,6 +12,8 @@ import com.vaadin.flow.router.Route;
 
 @Route("/settings")
 public class SettingsView extends VerticalLayout {
+    private final User user;
+
     private final H1 bmiLabel = new H1();
     private final H2 bmiStatusLabel = new H2();
     private final H3 calorieLabel = new H3();
@@ -23,22 +24,22 @@ public class SettingsView extends VerticalLayout {
     private final Paragraph activityLevelLabel = new Paragraph();
     private final Paragraph genderLabel = new Paragraph();
 
-    public SettingsView(UserService userService) {
-        var user = userService.get();
+    public SettingsView(User user) {
+        this.user = user;
 
-        refresh(user);
+        refresh();
         add(bmiLabel, bmiStatusLabel, calorieLabel);
         add(nameLabel, ageLabel, heightLabel, weightLabel, activityLevelLabel, genderLabel);
 
         var editButton = new Button("Bearbeiten");
-        var dialog = new UserEditDialog(user, () -> refresh(user));
+        var dialog = new UserEditDialog(user, this::refresh);
 
         editButton.addClickListener(e -> dialog.open());
 
         add(editButton, dialog);
     }
 
-    public void refresh(User user) {
+    public void refresh() {
         bmiLabel.setText("%.2f BMI".formatted(user.getBMI()));
         bmiStatusLabel.setText(user.getBMIStatus().toString());
         calorieLabel.setText("%d kcal".formatted(user.getDailyCalories()));
