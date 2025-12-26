@@ -4,6 +4,7 @@ import com.example.application.components.grid.GridLayout;
 import com.example.application.components.grid.GridTrack;
 import com.example.application.entities.Meal;
 import com.example.application.services.MealService;
+import com.example.application.singletons.User;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
@@ -16,23 +17,28 @@ import com.vaadin.flow.router.Route;
 
 @Route
 public class MainView extends VerticalLayout {
-    public MainView(MealService mealService) {
+    public MainView(MealService mealService, User user) {
         final var meals = mealService.findAll();
 
+        getStyle().set("padding", "1em 4em");
+
         final var totalCalories = meals.stream().mapToInt(Meal::getCalories).sum();
-        final var maxCalories = 2000;
+        add(calorieBar(totalCalories, user.getDailyCalories()));
 
-        add(calorieBar(totalCalories, maxCalories));
+        final var carbs = meals.stream().mapToInt(Meal::getCarbs).sum();
+        final var carbsText = new Paragraph(String.format("%dg/%dg Kohlenhydrate", carbs, user.getDailyCarbs()));
 
-        final var totalCarbs = 45;
-        final var actualCarbs = meals.stream().mapToInt(Meal::getCarbs).sum();
-        final var carbsText = new Paragraph(String.format("%d/%d", actualCarbs, totalCarbs));
+        final var protein = meals.stream().mapToInt(Meal::getProtein).sum();
+        final var proteinText = new Paragraph(String.format("%d/%d Proteine", protein, user.getDailyProtein()));
 
-        final var totalProtein = 120;
-        final var actualProtein = meals.stream().mapToInt(Meal::getProtein).sum();
-        final var proteinText = new Paragraph(String.format("%d/%d", actualProtein, totalProtein));
+        final var fats = meals.stream().mapToInt(Meal::getFats).sum();
+        final var fatsText = new  Paragraph(String.format("%d/%d Fett", fats, user.getDailyFats()));
 
-        final var nutritionDashboard = new GridLayout(new GridTrack.Count(2));
+        final var fiber = meals.stream().mapToInt(Meal::getFats).sum();
+        final var fiberText = new Paragraph(String.format("%d/%d Ballaststoffe", fiber, user.getDailyFibers()));
+
+        final var nutritionDashboard = new GridLayout(new GridTrack.Count(2), carbsText, proteinText, fatsText, fiberText);
+        add(nutritionDashboard);
 
         add(new Button("Add", event -> {
             getUI().ifPresent(ui -> ui.navigate(AddView.class));
@@ -52,12 +58,13 @@ public class MainView extends VerticalLayout {
 
     public Component calorieBar(int totalCalories, int maxCalories) {
         final var container = new VerticalLayout();
+        container.getStyle().set("padding", "0");
 
         final var calorieBar = new ProgressBar();
         calorieBar.setValue((double) totalCalories / maxCalories);
         calorieBar.setHeight(4, Unit.EM);
 
-        final var calorieStatusText = String.format("%d / %d", totalCalories, maxCalories);
+        final var calorieStatusText = String.format("%d / %d kcal", totalCalories, maxCalories);
         final var calorieStatus = new Paragraph(calorieStatusText);
 
         container.add(calorieBar, calorieStatus);

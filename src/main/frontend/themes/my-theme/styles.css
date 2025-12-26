@@ -16,4 +16,13 @@ vaadin-text-field.bordered::part(input-field) {
   background-color: var(--lumo-base-color);
 }
 
+.grid-layout {
+    display: grid;
+    gap: 1rem;
+    width: 100%;
+
+    & *:nth-child(even) {
+        text-align: right;
+    }
+}
 
