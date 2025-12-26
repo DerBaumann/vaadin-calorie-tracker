@@ -6,8 +6,8 @@ public enum Gender {
 
     public String toLabel() {
         return switch (this) {
-            case Male ->  "Male";
-            case Female ->  "Female";
+            case Male ->  "Männlich";
+            case Female ->  "Weiblich";
         };
     }
 }

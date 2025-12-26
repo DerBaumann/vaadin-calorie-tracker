@@ -48,7 +48,7 @@ public class SettingsView extends VerticalLayout {
         ageLabel.setText("Alter: %d".formatted(user.getAge()));
         heightLabel.setText("Grösse: %d cm".formatted(user.getHeight()));
         weightLabel.setText("Gewicht: %d kg".formatted(user.getWeight()));
-        activityLevelLabel.setText("Aktivität: %s".formatted(user.getActivityLevel()));
-        genderLabel.setText("Geschlecht: %s".formatted(user.getGender()));
+        activityLevelLabel.setText("Aktivität: %s".formatted(user.getActivityLevel().toLabel()));
+        genderLabel.setText("Geschlecht: %s".formatted(user.getGender().toLabel()));
     }
 }

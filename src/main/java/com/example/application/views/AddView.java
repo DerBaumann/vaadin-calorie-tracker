@@ -20,14 +20,14 @@ public class AddView extends VerticalLayout {
 
     private TextField name = new TextField("Name");
 
-    private IntegerField calories = new IntegerField("Calories");
-    private IntegerField carbs = new IntegerField("Carbs");
+    private IntegerField calories = new IntegerField("Kalorien");
+    private IntegerField carbs = new IntegerField("Kohlenhydrate");
     private IntegerField protein = new IntegerField("Protein");
-    private IntegerField fats = new IntegerField("Fats");
-    private IntegerField fibers = new IntegerField("Fibers");
+    private IntegerField fats = new IntegerField("Fett");
+    private IntegerField fibers = new IntegerField("Ballaststoffe");
 
-    private Button saveButton = new Button("Save");
-    private Button backButton = new Button("Back");
+    private Button saveButton = new Button("Speichern");
+    private Button backButton = new Button("Zurück");
 
     private Binder<Meal> binder = new Binder<>(Meal.class);
 
@@ -49,12 +49,12 @@ public class AddView extends VerticalLayout {
         var meal = new Meal();
 
         if (!binder.writeBeanIfValid(meal)) {
-            Notification.show("Invalid data provided");
+            Notification.show("Ungülige Daten gegeben");
             return;
         }
 
         mealService.save(meal);
-        Notification.show("Saved");
+        Notification.show("Gespeichert");
 
         UI.getCurrent().navigate(MainView.class);
     }

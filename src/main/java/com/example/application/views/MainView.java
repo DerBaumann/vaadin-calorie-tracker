@@ -40,12 +40,12 @@ public class MainView extends VerticalLayout {
         final var nutritionDashboard = new GridLayout(new GridTrack.Count(2), carbsText, proteinText, fatsText, fiberText);
         add(nutritionDashboard);
 
-        add(new Button("Add", event -> {
+        add(new Button("Neue Mahlzeit", event -> {
             getUI().ifPresent(ui -> ui.navigate(AddView.class));
         }));
 
         if (meals.isEmpty()) {
-            add(new Paragraph("No meals found"));
+            add(new Paragraph("Keine Mahlzeiten gefunden"));
         } else {
             var mealList = new UnorderedList();
             for (Meal meal : mealService.findAll()) {

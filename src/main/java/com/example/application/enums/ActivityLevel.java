@@ -5,11 +5,11 @@ public enum ActivityLevel {
 
     public String toLabel() {
         return switch (this) {
-            case Sedentary -> "Sedentary";
-            case LightlyActive -> "Lightly active";
-            case ModeratelyActive -> "Moderately active";
-            case VeryActive -> "Very active";
-            case ExtremelyActive -> "Extremely active";
+            case Sedentary -> "Sitzend";
+            case LightlyActive -> "Leicht aktiv";
+            case ModeratelyActive -> "Mässig aktiv";
+            case VeryActive -> "Sehr aktiv";
+            case ExtremelyActive -> "Extrem aktiv";
         };
     }
 

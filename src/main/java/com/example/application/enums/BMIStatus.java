@@ -21,12 +21,12 @@ public enum BMIStatus {
 
     public String toString() {
         return switch (this) {
-            case Underweight -> "underweight";
-            case Normal -> "normal";
-            case Overweight -> "overweight";
-            case ObesetyClass1 -> "obesety class 1";
-            case ObesetyClass2 -> "obesety class 2";
-            case ObesetyClass3 -> "obesety class 3";
+            case Underweight -> "Untergewichtig";
+            case Normal -> "Normal";
+            case Overweight -> "Übergewichtig";
+            case ObesetyClass1 -> "Adipositas (Grad I)";
+            case ObesetyClass2 -> "Adipositas (Grad II)";
+            case ObesetyClass3 -> "Adipositas (Grad III)";
         };
     }
 }

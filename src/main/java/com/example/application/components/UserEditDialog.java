@@ -43,14 +43,14 @@ public class UserEditDialog extends Dialog {
         add(dialogLayout);
 
         var backButton = new Button("Abbrechen", e -> close());
-        var saveButton = new Button("Save", e -> save(user, onSave));
+        var saveButton = new Button("Speichern", e -> save(user, onSave));
 
         getFooter().add(backButton, saveButton);
     }
 
     private void save(User user, Runnable onSave) {
         if (!binder.writeBeanIfValid(user)) {
-            Notification.show("Invalid data provided");
+            Notification.show("Keine gültigen Werte eingegeben!");
             return;
         }
 
