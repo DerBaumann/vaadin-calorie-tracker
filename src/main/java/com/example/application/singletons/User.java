@@ -41,11 +41,14 @@ public class User {
     }
 
     public int getDailyProtein() {
-        return (int) (weight * 1.5);
+        return (int) (weight * 2);
     }
 
     public int getDailyFats() {
-        return (int) (getDailyCalories() / 0.3);
+        return (int) switch (gender) {
+            case Male -> weight * 0.5;
+            case Female -> weight;
+        };
     }
 
     public int getDailyFibers() {
