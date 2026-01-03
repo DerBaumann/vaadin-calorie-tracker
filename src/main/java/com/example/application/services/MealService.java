@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +22,10 @@ public class MealService implements Serializable {
 
     public List<Meal> findAll() {
         return mealRepo.findAll();
+    }
+
+    public Optional<Meal> findById(Long id) {
+        return mealRepo.findById(id);
     }
 
     public void delete(Meal meal) {

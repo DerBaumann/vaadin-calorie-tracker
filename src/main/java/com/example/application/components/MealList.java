@@ -2,12 +2,16 @@ package com.example.application.components;
 
 import com.example.application.entities.Meal;
 import com.example.application.services.MealService;
+import com.example.application.views.MealView;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.ListItem;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.UnorderedList;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
 public class MealList extends UnorderedList {
@@ -57,6 +61,9 @@ public class MealList extends UnorderedList {
         var endContainer = new HorizontalLayout();
         endContainer.add(
                 new Paragraph("%d kcal".formatted(meal.getCalories())),
+                new Button(VaadinIcon.SEARCH.create(), e -> {
+                    UI.getCurrent().navigate(MealView.class, meal.getId().toString());
+                }),
                 new Button("X", e -> delete(meal))
         );
 
