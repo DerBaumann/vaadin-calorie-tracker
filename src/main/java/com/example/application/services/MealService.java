@@ -22,4 +22,8 @@ public class MealService implements Serializable {
     public List<Meal> findAll() {
         return mealRepo.findAll();
     }
+
+    public void delete(Meal meal) {
+        mealRepo.delete(meal);
+    }
 }

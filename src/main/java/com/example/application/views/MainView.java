@@ -1,5 +1,6 @@
 package com.example.application.views;
 
+import com.example.application.components.MealList;
 import com.example.application.components.grid.GridLayout;
 import com.example.application.components.grid.GridTrack;
 import com.example.application.entities.Meal;
@@ -8,9 +9,7 @@ import com.example.application.singletons.User;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.ListItem;
 import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.html.UnorderedList;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.progressbar.ProgressBar;
 import com.vaadin.flow.router.Route;
@@ -44,16 +43,8 @@ public class MainView extends VerticalLayout {
             getUI().ifPresent(ui -> ui.navigate(AddView.class));
         }));
 
-        if (meals.isEmpty()) {
-            add(new Paragraph("Keine Mahlzeiten gefunden"));
-        } else {
-            var mealList = new UnorderedList();
-            for (Meal meal : mealService.findAll()) {
-                var listItem = new ListItem(meal.getName());
-                mealList.add(listItem);
-            }
+            var mealList = new MealList(mealService);
             add(mealList);
-        }
     }
 
     public Component calorieBar(int totalCalories, int maxCalories) {
@@ -61,7 +52,7 @@ public class MainView extends VerticalLayout {
         container.getStyle().set("padding", "0");
 
         final var calorieBar = new ProgressBar();
-        calorieBar.setValue((double) totalCalories / maxCalories);
+        calorieBar.setValue(Math.min(Math.max(totalCalories / maxCalories, 0), 1));
         calorieBar.setHeight(4, Unit.EM);
 
         final var calorieStatusText = String.format("%d / %d kcal", totalCalories, maxCalories);

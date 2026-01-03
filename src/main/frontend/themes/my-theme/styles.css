@@ -26,3 +26,7 @@ vaadin-text-field.bordered::part(input-field) {
     }
 }
 
+.meal-card {
+    background-color: var(--lumo-contrast-5pct);
+    box-shadow: var(--lumo-box-shadow-xs);
+}
