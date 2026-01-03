@@ -6,6 +6,7 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
@@ -35,14 +36,13 @@ public class AddView extends VerticalLayout {
     public AddView(MealService mealService) {
         this.mealService = mealService;
 
-        var formLayout = new FormLayout();
-        formLayout.add(name,  calories, carbs, protein, fats, fibers,  saveButton,  backButton);
-
         binder.bindInstanceFields(this);
         saveButton.addClickListener(e -> saveMeal());
         backButton.addClickListener(e -> getUI().ifPresent(ui -> ui.navigate(MainView.class)));
 
-        add(formLayout);
+        var buttonContainer = new HorizontalLayout(saveButton, backButton);
+
+        add(name,  calories, carbs, protein, fats, fibers,  buttonContainer);
     }
 
     public void saveMeal() {
