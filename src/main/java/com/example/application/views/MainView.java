@@ -32,8 +32,6 @@ public class MainView extends VerticalLayout {
     }
 
     public void refresh() {
-        System.out.println("Refreshing");
-
         removeAll();
 
         final var meals = mealService.findAll();
