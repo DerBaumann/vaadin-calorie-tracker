@@ -1,5 +1,6 @@
 package com.example.application.views;
 
+import com.example.application.components.MealDialog;
 import com.example.application.components.MealList;
 import com.example.application.components.grid.GridLayout;
 import com.example.application.components.grid.GridTrack;
@@ -16,10 +17,22 @@ import com.vaadin.flow.router.Route;
 
 @Route
 public class MainView extends VerticalLayout {
+    private final MealService mealService;
+    private final User user;
+
     public MainView(MealService mealService, User user) {
-        final var meals = mealService.findAll();
+        this.mealService = mealService;
+        this.user = user;
 
         getStyle().set("padding", "1em 4em");
+
+        refresh();
+    }
+
+    public void refresh() {
+        removeAll();
+
+        final var meals = mealService.findAll();
 
         final var totalCalories = meals.stream().mapToInt(Meal::getCalories).sum();
         add(calorieBar(totalCalories, user.getDailyCalories()));
@@ -31,7 +44,7 @@ public class MainView extends VerticalLayout {
         final var proteinText = new Paragraph(String.format("%d/%d Proteine", protein, user.getDailyProtein()));
 
         final var fats = meals.stream().mapToInt(Meal::getFats).sum();
-        final var fatsText = new  Paragraph(String.format("%d/%d Fett", fats, user.getDailyFats()));
+        final var fatsText = new Paragraph(String.format("%d/%d Fett", fats, user.getDailyFats()));
 
         final var fiber = meals.stream().mapToInt(Meal::getFats).sum();
         final var fiberText = new Paragraph(String.format("%d/%d Ballaststoffe", fiber, user.getDailyFibers()));
@@ -39,12 +52,15 @@ public class MainView extends VerticalLayout {
         final var nutritionDashboard = new GridLayout(new GridTrack.Count(2), carbsText, proteinText, fatsText, fiberText);
         add(nutritionDashboard);
 
-        add(new Button("Neue Mahlzeit", event -> {
-            getUI().ifPresent(ui -> ui.navigate(AddView.class));
-        }));
+        final var addDialog = new MealDialog(new Meal(), meal -> {
+            mealService.save(meal);
+            refresh();
+        });
 
-            var mealList = new MealList(mealService);
-            add(mealList);
+        add(addDialog, new Button("Neue Mahlzeit", event -> addDialog.open()));
+
+        var mealList = new MealList(mealService);
+        add(mealList);
     }
 
     public Component calorieBar(int totalCalories, int maxCalories) {

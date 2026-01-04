@@ -1,24 +1,17 @@
-package com.example.application.views;
+package com.example.application.components;
 
 import com.example.application.entities.Meal;
-import com.example.application.services.MealService;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.router.Route;
-import org.springframework.beans.factory.annotation.Autowired;
 
-@Route("/add")
-public class AddView extends VerticalLayout {
+import java.util.function.Consumer;
 
-    private final MealService mealService;
-
+public class MealDialog extends Dialog {
     private TextField name = new TextField("Name");
 
     private IntegerField calories = new IntegerField("Kalorien");
@@ -28,34 +21,31 @@ public class AddView extends VerticalLayout {
     private IntegerField fibers = new IntegerField("Ballaststoffe");
 
     private Button saveButton = new Button("Speichern");
-    private Button backButton = new Button("Zurück");
+    private Button closeButton = new Button("Zurück");
 
     private Binder<Meal> binder = new Binder<>(Meal.class);
 
-    @Autowired
-    public AddView(MealService mealService) {
-        this.mealService = mealService;
+    public MealDialog(Meal meal, Consumer<Meal> onSave) {
+        var layout = new FormLayout();
 
         binder.bindInstanceFields(this);
-        saveButton.addClickListener(e -> saveMeal());
-        backButton.addClickListener(e -> getUI().ifPresent(ui -> ui.navigate(MainView.class)));
+        saveButton.addClickListener(e -> saveMeal(meal, onSave));
+        closeButton.addClickListener(e -> close());
 
-        var buttonContainer = new HorizontalLayout(saveButton, backButton);
+        layout.add(name,  calories, carbs, protein, fats, fibers);
 
-        add(name,  calories, carbs, protein, fats, fibers,  buttonContainer);
+        add(layout);
+        getFooter().add(closeButton, saveButton);
     }
 
-    public void saveMeal() {
-        var meal = new Meal();
-
+    public void saveMeal(Meal meal, Consumer<Meal> onSave) {
         if (!binder.writeBeanIfValid(meal)) {
             Notification.show("Ungülige Daten gegeben");
             return;
         }
 
-        mealService.save(meal);
         Notification.show("Gespeichert");
-
-        UI.getCurrent().navigate(MainView.class);
+        onSave.accept(meal);
+        close();
     }
 }
