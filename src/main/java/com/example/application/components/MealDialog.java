@@ -34,6 +34,9 @@ public class MealDialog extends Dialog {
 
         layout.add(name,  calories, carbs, protein, fats, fibers);
 
+        binder.bindInstanceFields(this);
+        binder.setBean(meal);
+
         add(layout);
         getFooter().add(closeButton, saveButton);
     }

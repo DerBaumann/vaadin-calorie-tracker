@@ -11,14 +11,13 @@ import com.vaadin.flow.component.html.UnorderedList;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
-public class MealList extends UnorderedList {
-    private final MealService mealService;
+import java.util.List;
+import java.util.function.Consumer;
 
-    public MealList(MealService mealService) {
-        this.mealService = mealService;
+public class MealList extends UnorderedList {
+    public MealList(List<Meal> meals, Consumer<Meal> onDelete) {
 
         addClassNames(
                 LumoUtility.Padding.NONE,
@@ -26,24 +25,16 @@ public class MealList extends UnorderedList {
                 LumoUtility.ListStyleType.NONE
         );
 
-        refresh();
-    }
-
-    private void refresh() {
-        removeAll();
-
-        var meals = mealService.findAll();
-
         if (meals.isEmpty()) {
             add(new Paragraph("Keine Mahlzeiten gefunden"));
         } else {
             for (Meal meal : meals) {
-                add(new ListItem(mealCard(meal)));
+                add(new ListItem(mealCard(meal, onDelete)));
             }
         }
     }
 
-    public HorizontalLayout mealCard(Meal meal) {
+    public HorizontalLayout mealCard(Meal meal, Consumer<Meal> onDelete) {
         var layout = new HorizontalLayout();
 
         layout.addClassNames(
@@ -64,16 +55,11 @@ public class MealList extends UnorderedList {
                 new Button(VaadinIcon.SEARCH.create(), e -> {
                     UI.getCurrent().navigate(MealView.class, meal.getId().toString());
                 }),
-                new Button("X", e -> delete(meal))
+                new Button("X", e -> onDelete.accept(meal))
         );
 
 
         layout.add(startContainer, endContainer);
         return layout;
-    }
-
-    private void delete(Meal meal) {
-        mealService.delete(meal);
-        refresh();
     }
 }

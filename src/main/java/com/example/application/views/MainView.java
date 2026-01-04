@@ -15,6 +15,8 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.progressbar.ProgressBar;
 import com.vaadin.flow.router.Route;
 
+import java.util.function.Function;
+
 @Route
 public class MainView extends VerticalLayout {
     private final MealService mealService;
@@ -30,6 +32,8 @@ public class MainView extends VerticalLayout {
     }
 
     public void refresh() {
+        System.out.println("Refreshing");
+
         removeAll();
 
         final var meals = mealService.findAll();
@@ -59,7 +63,10 @@ public class MainView extends VerticalLayout {
 
         add(addDialog, new Button("Neue Mahlzeit", event -> addDialog.open()));
 
-        var mealList = new MealList(mealService);
+        var mealList = new MealList(meals, (meal) -> {
+            mealService.delete(meal);
+            refresh();
+        });
         add(mealList);
     }
 
@@ -68,7 +75,9 @@ public class MainView extends VerticalLayout {
         container.getStyle().set("padding", "0");
 
         final var calorieBar = new ProgressBar();
-        calorieBar.setValue(Math.min(Math.max(totalCalories / maxCalories, 0), 1));
+
+        final double calorieRatio = (double) totalCalories / maxCalories;
+        calorieBar.setValue(calorieRatio > 1 ? 1 : calorieRatio < 0 ? 0 : calorieRatio);
         calorieBar.setHeight(4, Unit.EM);
 
         final var calorieStatusText = String.format("%d / %d kcal", totalCalories, maxCalories);

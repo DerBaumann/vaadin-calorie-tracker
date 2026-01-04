@@ -1,5 +1,6 @@
 package com.example.application.views;
 
+import com.example.application.components.MealDialog;
 import com.example.application.components.grid.GridLayout;
 import com.example.application.components.grid.GridTrack;
 import com.example.application.entities.Meal;
@@ -25,6 +26,9 @@ import org.hibernate.dialect.function.array.H2ArrayContainsFunction;
 @RequiredArgsConstructor
 public class MealView extends VerticalLayout implements HasUrlParameter<String> {
     private final MealService mealService;
+    private Meal meal;
+
+    private MealDialog editDialog;
 
     @Override
     public void setParameter(BeforeEvent beforeEvent, String idStr) {
@@ -36,7 +40,21 @@ public class MealView extends VerticalLayout implements HasUrlParameter<String> 
             return;
         }
 
-        Meal meal = mealOpt.get();
+        this.meal = mealOpt.get();
+
+        this.editDialog  = new MealDialog(meal, (m) -> {
+            mealService.save(m);
+            this.meal = m;
+            refresh();
+        });
+
+        add(editDialog);
+
+        refresh();
+    }
+
+    public void refresh() {
+        removeAll();
 
         var title = new H1(meal.getName());
         var caloriesHeader = new H2("%d kcal".formatted(meal.getCalories()));
@@ -51,10 +69,13 @@ public class MealView extends VerticalLayout implements HasUrlParameter<String> 
         );
 
         var buttonLayout = new HorizontalLayout();
+
         var backButton = new Button("Zurück", e -> {
             UI.getCurrent().navigate(MainView.class);
         });
-        var editButton = new Button("Bearbeiten");
+
+        var editButton = new Button("Bearbeiten", e -> editDialog.open());
+
         buttonLayout.add(backButton, editButton);
 
         add(title, caloriesHeader, nutritionGrid, buttonLayout);
