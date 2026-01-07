@@ -5,11 +5,13 @@ import com.example.application.components.MealList;
 import com.example.application.components.grid.GridLayout;
 import com.example.application.components.grid.GridTrack;
 import com.example.application.entities.Meal;
+import com.example.application.layouts.MainLayout;
 import com.example.application.services.MealService;
 import com.example.application.singletons.User;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.Main;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.progressbar.ProgressBar;
@@ -18,7 +20,7 @@ import com.vaadin.flow.router.Route;
 import java.util.function.Function;
 
 @Route
-public class MainView extends VerticalLayout {
+public class MainView extends MainLayout {
     private final MealService mealService;
     private final User user;
 

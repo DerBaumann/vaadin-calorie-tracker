@@ -22,6 +22,7 @@ public class MealList extends UnorderedList {
         addClassNames(
                 LumoUtility.Padding.NONE,
                 LumoUtility.Margin.NONE,
+                LumoUtility.Width.FULL,
                 LumoUtility.ListStyleType.NONE
         );
 

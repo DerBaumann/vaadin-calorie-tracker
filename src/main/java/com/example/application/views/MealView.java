@@ -4,6 +4,7 @@ import com.example.application.components.MealDialog;
 import com.example.application.components.grid.GridLayout;
 import com.example.application.components.grid.GridTrack;
 import com.example.application.entities.Meal;
+import com.example.application.layouts.MainLayout;
 import com.example.application.repositories.MealRepo;
 import com.example.application.services.MealService;
 import com.nimbusds.jose.crypto.ECDH1PUX25519Decrypter;
@@ -24,7 +25,7 @@ import org.hibernate.dialect.function.array.H2ArrayContainsFunction;
 
 @Route("view")
 @RequiredArgsConstructor
-public class MealView extends VerticalLayout implements HasUrlParameter<String> {
+public class MealView extends MainLayout implements HasUrlParameter<String> {
     private final MealService mealService;
     private Meal meal;
 

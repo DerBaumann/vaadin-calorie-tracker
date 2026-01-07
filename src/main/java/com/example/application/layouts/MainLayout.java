@@ -1,19 +1,13 @@
 package com.example.application.layouts;
 
-import com.example.application.views.MainView;
-import com.example.application.views.SettingsView;
-import com.vaadin.flow.component.applayout.AppLayout;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.router.Layout;
-import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.theme.lumo.LumoUtility;
 
-@Layout
-public class MainLayout extends AppLayout {
+public class MainLayout extends VerticalLayout {
     public MainLayout() {
-        var layout = new HorizontalLayout(new RouterLink("Home", MainView.class), new RouterLink("Einstellungen", SettingsView.class));
-        layout.getThemeList().add("spacing");
-        layout.setPadding(true);
-
-        addToNavbar(layout);
+        addClassNames(
+                LumoUtility.MaxWidth.SCREEN_MEDIUM,
+                LumoUtility.Margin.Horizontal.AUTO
+        );
     }
 }

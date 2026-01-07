@@ -1,6 +1,7 @@
 package com.example.application.views;
 
 import com.example.application.components.UserEditDialog;
+import com.example.application.layouts.MainLayout;
 import com.example.application.singletons.User;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
@@ -11,7 +12,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
 @Route("/settings")
-public class SettingsView extends VerticalLayout {
+public class SettingsView extends MainLayout {
     private final User user;
 
     private final H1 bmiLabel = new H1();
