@@ -6,6 +6,16 @@ It contains all the necessary configuration and some placeholder files to get yo
 The best way to create your own project based on this starter is [start.vaadin.com](https://start.vaadin.com/) - you can get only the necessary parts and choose the package naming you want to use.
 
 ## Running the Application
+**IMPORTANT:** For this app to run you need to connect it to a database. The easiest way fot testing would be
+to use the `docker-compose.yml`, that is included in this project. You can start this database using the following command:
+
+```shell
+docker compose up -d
+```
+
+If you run this database you also wont need to configure anything else, since this app uses the credentials of the docker-db
+if nothing is set.
+
 There are two ways to run the application :  using `mvn spring-boot:run` or by running the `Application` class directly from your IDE.
 
 You can use any IDE of your preference,but we suggest Eclipse or Intellij IDEA.

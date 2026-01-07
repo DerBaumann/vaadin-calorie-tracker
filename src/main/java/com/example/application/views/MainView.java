@@ -42,16 +42,16 @@ public class MainView extends MainLayout {
         add(calorieBar(totalCalories, user.getDailyCalories()));
 
         final var carbs = meals.stream().mapToInt(Meal::getCarbs).sum();
-        final var carbsText = new Paragraph(String.format("%dg/%dg Kohlenhydrate", carbs, user.getDailyCarbs()));
+        final var carbsText = new Paragraph(String.format("%dg / %dg Kohlenhydrate", carbs, user.getDailyCarbs()));
 
         final var protein = meals.stream().mapToInt(Meal::getProtein).sum();
-        final var proteinText = new Paragraph(String.format("%d/%d Proteine", protein, user.getDailyProtein()));
+        final var proteinText = new Paragraph(String.format("%dg / %dg Proteine", protein, user.getDailyProtein()));
 
         final var fats = meals.stream().mapToInt(Meal::getFats).sum();
-        final var fatsText = new Paragraph(String.format("%d/%d Fett", fats, user.getDailyFats()));
+        final var fatsText = new Paragraph(String.format("%dg / %dg Fett", fats, user.getDailyFats()));
 
         final var fiber = meals.stream().mapToInt(Meal::getFats).sum();
-        final var fiberText = new Paragraph(String.format("%d/%d Ballaststoffe", fiber, user.getDailyFibers()));
+        final var fiberText = new Paragraph(String.format("%dg / %dg Ballaststoffe", fiber, user.getDailyFibers()));
 
         final var nutritionDashboard = new GridLayout(new GridTrack.Count(2), carbsText, proteinText, fatsText, fiberText);
         add(nutritionDashboard);
